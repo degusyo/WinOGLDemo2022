@@ -9,6 +9,7 @@
 
 #include "resource.h"       // メイン シンボル
 #include "gl/GL.h"
+#include "windows.h"
 
 
 // CWinOGLDemo2022App:

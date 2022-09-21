@@ -46,6 +46,11 @@ public:
 	afx_msg void OnDestroy();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+private:
+	// 左押し込みx座標
+	float LPress_x;
+	// 左押し込みy座標
+	float LPress_y;
 };
 
 #ifndef _DEBUG  // WinOGLDemo2022View.cpp のデバッグ バージョン

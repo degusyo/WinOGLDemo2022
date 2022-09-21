@@ -66,12 +66,20 @@ void CWinOGLDemo2022View::OnDraw(CDC* pDC)
 	glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT);
 
 	// この間に描画を命令
-	glColor3f(1.0, 1.0, 1.0);
+	/*glColor3f(1.0, 1.0, 1.0);
 	glBegin(GL_LINE_LOOP);
 	glVertex2f(-0.5, 0.5);
 	glVertex2f(-0.5, -0.5);
 	glVertex2f(0.5, -0.5);
 	glVertex2f(0.5, 0.5);
+	glEnd();*/
+
+	// 問7.1
+	// 点を描画
+	glColor3f(1.0, 1.0, 1.0);
+	glPointSize(10);
+	glBegin(GL_POINTS);
+	glVertex2f(LPress_x, LPress_y);
 	glEnd();
 
 	glFlush();
@@ -107,7 +115,35 @@ CWinOGLDemo2022Doc* CWinOGLDemo2022View::GetDocument() const // デバッグ以�
 void CWinOGLDemo2022View::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: ここにメッセージ ハンドラー コードを追加するか、既定の処理を呼び出します。
+	
+	// 問7.1
+	// 描画領域の格納
+	CRect rect;
+	GetClientRect(rect);
 
+	// 座標正規化
+	LPress_x = (float)point.x / rect.Width();
+	LPress_y = (float)(rect.Height() - point.y) / rect.Height();
+
+	// ワールド座標変換
+	LPress_x = (LPress_x - 0.5) * 2;
+	LPress_y = (LPress_y - 0.5) * 2;
+
+	if (rect.Width() != 0 || rect.Height() != 0)
+	{
+		if (rect.Width() >= rect.Height())
+		{
+			GLdouble num = (GLdouble)rect.Width() / rect.Height();
+			LPress_x *= num;
+		}
+		else if (rect.Width() < rect.Height())
+		{
+			GLdouble num = (GLdouble)rect.Height() / rect.Width();
+			LPress_y *= num;
+		}
+	}
+
+	RedrawWindow();
 	CView::OnLButtonDown(nFlags, point);
 }
 
