@@ -26,6 +26,7 @@ BEGIN_MESSAGE_MAP(CWinOGLDemo2022View, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 // CWinOGLDemo2022View コンストラクション/デストラクション
@@ -140,4 +141,12 @@ void CWinOGLDemo2022View::OnDestroy()
 	// TODO: ここにメッセージ ハンドラー コードを追加します。
 	wglDeleteContext(m_hRC);
 
+}
+
+// 画面ちらつき補正
+BOOL CWinOGLDemo2022View::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: ここにメッセージ ハンドラー コードを追加するか、既定の処理を呼び出します。
+
+	return true;
 }
