@@ -27,6 +27,7 @@ BEGIN_MESSAGE_MAP(CWinOGLDemo2022View, CView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_ERASEBKGND()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CWinOGLDemo2022View コンストラクション/デストラクション
@@ -159,4 +160,23 @@ BOOL CWinOGLDemo2022View::OnEraseBkgnd(CDC* pDC)
 	// TODO: ここにメッセージ ハンドラー コードを追加するか、既定の処理を呼び出します。
 
 	return true;
+}
+
+// 画面サイズ調整
+void CWinOGLDemo2022View::OnSize(UINT nType, int cx, int cy)
+{
+	CView::OnSize(nType, cx, cy);
+
+	// TODO: ここにメッセージ ハンドラー コードを追加します。
+	CClientDC clientDC(this);
+	wglMakeCurrent(clientDC.m_hDC, m_hRC);
+
+	glViewport(0, 0, cx, cy);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//glOrtho(-1,1,-1,1-100,100); // 問 6.2 で考える内容
+	glMatrixMode(GL_MODELVIEW);
+
+	RedrawWindow();
+	wglMakeCurrent(clientDC.m_hDC, NULL);
 }
