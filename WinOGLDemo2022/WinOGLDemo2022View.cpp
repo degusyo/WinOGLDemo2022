@@ -82,7 +82,7 @@ void CWinOGLDemo2022View::OnDraw(CDC* pDC)
 	glVertex2f(LPress_x, LPress_y);
 	glEnd();*/
 
-	AC.Draw(LPress_x, LPress_y);
+	AC.Draw();
 
 	glFlush();
 	SwapBuffers(pDC->m_hDC);
@@ -144,6 +144,7 @@ void CWinOGLDemo2022View::OnLButtonDown(UINT nFlags, CPoint point)
 			LPress_y *= num;
 		}
 	}
+	AC.SetLPress_XY(LPress_x, LPress_y);
 
 	RedrawWindow();
 	CView::OnLButtonDown(nFlags, point);
@@ -177,8 +178,6 @@ int CWinOGLDemo2022View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	int pixelFormat = ChoosePixelFormat(clientDC.m_hDC,&pfd);
 	SetPixelFormat(clientDC.m_hDC, pixelFormat, &pfd);
 	m_hRC = wglCreateContext(clientDC.m_hDC);
-
-
 
 	return 0;
 }
