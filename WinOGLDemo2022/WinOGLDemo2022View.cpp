@@ -63,6 +63,15 @@ void CWinOGLDemo2022View::OnDraw(CDC* pDC)
 	wglMakeCurrent(pDC->m_hDC, m_hRC);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT);
+
+	// この間に描画を命令
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(-1.0, 0.5);
+	glVertex2f(0.0, -0.5);
+	glVertex2f(1.0, 0.5);
+	glEnd();
+
 	glFlush();
 	SwapBuffers(pDC->m_hDC);
 	wglMakeCurrent(pDC->m_hDC, NULL);
