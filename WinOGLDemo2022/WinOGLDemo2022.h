@@ -8,6 +8,7 @@
 #endif
 
 #include "resource.h"       // メイン シンボル
+#include "gl/GL.h"
 
 
 // CWinOGLDemo2022App:
