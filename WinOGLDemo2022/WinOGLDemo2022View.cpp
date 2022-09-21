@@ -136,10 +136,11 @@ int CWinOGLDemo2022View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	0,0,0
 	};
 	CClientDC clientDC(this);
-	int pixelFormat = ChoosePixelFormat(clientDC.m_hDC,
-		&pfd);
+	int pixelFormat = ChoosePixelFormat(clientDC.m_hDC,&pfd);
 	SetPixelFormat(clientDC.m_hDC, pixelFormat, &pfd);
 	m_hRC = wglCreateContext(clientDC.m_hDC);
+
+
 
 	return 0;
 }
@@ -171,10 +172,31 @@ void CWinOGLDemo2022View::OnSize(UINT nType, int cx, int cy)
 	CClientDC clientDC(this);
 	wglMakeCurrent(clientDC.m_hDC, m_hRC);
 
+	/*
 	glViewport(0, 0, cx, cy);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//glOrtho(-1,1,-1,1-100,100); // 問 6.2 で考える内容
+	glOrtho(-1,1,-1,1-100,100); // 問 6.2 で考える内容
+	glMatrixMode(GL_MODELVIEW);
+	*/
+
+	// 問6.2
+	glViewport(0, 0, cx, cy);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	if (cx != 0 || cy != 0)
+	{
+		if (cx >= cy)
+		{
+			GLdouble num = (GLdouble)cx / cy;
+			glOrtho(-num, num, -1, 1, -100, 100);
+		}
+		else if (cx < cy)
+		{
+			GLdouble num = (GLdouble)cy / cx;
+			glOrtho(-1, 1, -num, num, -100, 100);
+		}
+	}
 	glMatrixMode(GL_MODELVIEW);
 
 	RedrawWindow();
