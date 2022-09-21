@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "CAdminControl.h"
 
 
 class CWinOGLDemo2022View : public CView
@@ -51,6 +52,9 @@ private:
 	float LPress_x;
 	// 左押し込みy座標
 	float LPress_y;
+	// Adminクラス呼び出し変数
+	CAdminControl AC;
+public:
 };
 
 #ifndef _DEBUG  // WinOGLDemo2022View.cpp のデバッグ バージョン

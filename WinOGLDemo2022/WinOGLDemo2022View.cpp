@@ -76,11 +76,13 @@ void CWinOGLDemo2022View::OnDraw(CDC* pDC)
 
 	// 問7.1
 	// 点を描画
-	glColor3f(1.0, 1.0, 1.0);
+	/*glColor3f(1.0, 1.0, 1.0);
 	glPointSize(10);
 	glBegin(GL_POINTS);
 	glVertex2f(LPress_x, LPress_y);
-	glEnd();
+	glEnd();*/
+
+	AC.Draw(LPress_x, LPress_y);
 
 	glFlush();
 	SwapBuffers(pDC->m_hDC);
