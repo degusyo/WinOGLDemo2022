@@ -1,5 +1,6 @@
 #pragma once
 #include "gl/GL.h" // ñYÇÍÇ»Ç¢ÅIÅI
+#include "CVertex.h"
 
 class CAdminControl
 {
