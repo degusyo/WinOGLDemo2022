@@ -131,6 +131,7 @@ void CWinOGLDemo2022View::OnLButtonDown(UINT nFlags, CPoint point)
 	LPress_x = (LPress_x - 0.5) * 2;
 	LPress_y = (LPress_y - 0.5) * 2;
 
+	// 画面比率に合わせる
 	if (rect.Width() != 0 || rect.Height() != 0)
 	{
 		if (rect.Width() >= rect.Height())
