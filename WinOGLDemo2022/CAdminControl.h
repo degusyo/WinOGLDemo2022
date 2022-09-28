@@ -24,5 +24,7 @@ public:
 	void NewSetVertex(float new_x, float new_y);
 	// Shape‚Ìƒƒ‚ƒŠŠJ•ú
 	void DeleteShape();
+	// ‘SŒğ·”»’è
+	bool AllCross_Check();
 };
 

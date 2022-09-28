@@ -35,5 +35,7 @@ public:
 	CShape* GetNextShape();
 	// vertex‚Ìƒƒ‚ƒŠŠJ•ú
 	void DeleteVertex();
+	// Œğ·”»’è
+	bool Cross_Check(CVertex* start_v, CVertex* end_v);
 };
 
