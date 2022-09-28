@@ -145,7 +145,7 @@ void CWinOGLDemo2022View::OnLButtonDown(UINT nFlags, CPoint point)
 			LPress_y *= num;
 		}
 	}
-	AC.SetLPress_XY(LPress_x, LPress_y);
+	AC.NewSetVertex(LPress_x, LPress_y);
 
 	RedrawWindow();
 	CView::OnLButtonDown(nFlags, point);
