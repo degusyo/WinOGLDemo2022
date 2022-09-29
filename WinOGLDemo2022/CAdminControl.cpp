@@ -103,7 +103,7 @@ void CAdminControl::NewSetVertex(float new_x, float new_y)
 					end_v = v;
 				}
 
-				if (shape_head->Cross_Check(shape_head->GetVertexHead(), end_v))
+				if (CrossCheckOut(shape_head->GetVertexHead(), end_v))
 				{
 					shape_head->CloseShape();
 					return;
@@ -113,7 +113,7 @@ void CAdminControl::NewSetVertex(float new_x, float new_y)
 
 		CVertex v;
 		v.SetXY(new_x, new_y);
-		if (shape_head->Cross_Check(&v, shape_head->GetVertexHead()))
+		if (CrossCheckOut(&v, shape_head->GetVertexHead()))
 		{
 			shape_head->SetNewVertex(new_x, new_y);
 		}
@@ -136,14 +136,16 @@ void CAdminControl::DeleteShape()
 }
 
 
-// 全交差判定
-bool CAdminControl::AllCross_Check()
+
+
+// 他交差判定
+bool CAdminControl::CrossCheckOut(CVertex* start_v, CVertex* end_v)
 {
 	// TODO: ここに実装コードを追加します.
 	for (CShape* s = shape_head; s != NULL; s = s->GetNextShape())
 	{
-
+		if (!s->CrossCheckIn(start_v, end_v))	return false;
 	}
 
-	return false;
+	return true;
 }

@@ -99,7 +99,7 @@ void CShape::DeleteVertex()
 
 
 // 交差判定
-bool CShape::Cross_Check(CVertex* start_v, CVertex* end_v)
+bool CShape::CrossCheckIn(CVertex* start_v, CVertex* end_v)
 {
 	// TODO: ここに実装コードを追加します.
 	for (CVertex* v = vertex_head; v != NULL; v = v->GetNextVertex())
@@ -135,24 +135,17 @@ bool CShape::Cross_Check(CVertex* start_v, CVertex* end_v)
 		b1.SetXY(a_s->GetX() - b_s->GetX(), a_s->GetY() - b_s->GetY());
 		b2.SetXY(a_e->GetX() - b_s->GetX(), a_e->GetY() - b_s->GetY());
 
-		// 同じ点じゃないかを判定
-		if (a_s->GetX() != b_s->GetX() || a_s->GetY() != b_s->GetY() &&
-			a_s->GetX() != b_e->GetX() || a_s->GetY() != b_e->GetY() &&
-			a_e->GetX() != b_s->GetX() || a_e->GetX() != b_s->GetY() &&
-			a_e->GetX() != b_e->GetX() || a_e->GetX() != b_e->GetY())
+		 // 交差判定
+		float ca1, ca2, cb1, cb2;
+
+		ca1 = a.GetX() * a1.GetY() - a.GetY() * a1.GetX();
+		ca2 = a.GetX() * a2.GetY() - a.GetY() * a2.GetX();
+		cb1 = b.GetX() * b1.GetY() - b.GetY() * b1.GetX();
+		cb2 = b.GetX() * b2.GetY() - b.GetY() * b2.GetX();
+
+		if (ca1 * ca2 < 0 && cb1 * cb2 < 0)
 		{
-			// 交差判定
-			float ca1, ca2, cb1, cb2;
-
-			ca1 = a.GetX() * a1.GetY() - a.GetY() * a1.GetX();
-			ca2 = a.GetX() * a2.GetY() - a.GetY() * a2.GetX();
-			cb1 = b.GetX() * b1.GetY() - b.GetY() * b1.GetX();
-			cb2 = b.GetX() * b2.GetY() - b.GetY() * b2.GetX();
-
-			if (ca1 * ca2 < 0 && cb1 * cb2 < 0)
-			{
-				return false;
-			}
+			return false;
 		}
 	}
 
