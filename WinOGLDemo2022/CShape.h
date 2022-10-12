@@ -1,6 +1,8 @@
 #pragma once
 #include "CVertex.h"
 #include "math.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 class CShape
 {
@@ -37,5 +39,7 @@ public:
 	void DeleteVertex();
 	// Œğ·”»’è
 	bool CrossCheckIn(CVertex* start_v, CVertex* end_v);
+	// “à•ï”»’è
+	bool Insection_Judge(float x, float y);
 };
 

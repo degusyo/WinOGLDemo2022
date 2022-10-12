@@ -26,5 +26,7 @@ public:
 	void DeleteShape();
 	// ‘¼Œğ·”»’è
 	bool CrossCheckOut(CVertex* start_v, CVertex* end_v);
+	// “à•ï”»’è
+	bool Insection_Judge(float x, float y);
 };
 

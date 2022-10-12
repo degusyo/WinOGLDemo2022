@@ -151,3 +151,39 @@ bool CShape::CrossCheckIn(CVertex* start_v, CVertex* end_v)
 
 	return true;
 }
+
+
+// 内包判定
+bool CShape::Insection_Judge(float x, float y)
+{
+	// TODO: ここに実装コードを追加します.
+	float n = 0.0f;
+	for (CVertex* v_cell = vertex_head; v_cell != NULL; v_cell = v_cell->GetNextVertex())
+	{
+		CVertex a, b;
+
+		if (v_cell->GetNextVertex() != NULL)
+		{
+			// ベクトルの算出
+			a.SetXY(v_cell->GetX() - x, v_cell->GetY() - y);
+			b.SetXY(v_cell->GetNextVertex()->GetX() - x, v_cell->GetNextVertex()->GetY() - y);
+		}
+		else
+		{
+			a.SetXY(v_cell->GetX() - x, v_cell->GetY() - y);
+			b.SetXY(vertex_head->GetX() - x, vertex_head->GetY() - y);
+		}
+
+		// 外積・内積の計算
+		float cross, dot;
+
+		cross = a.GetX() * b.GetY() - a.GetY() * b.GetX();
+		dot = a.GetX() * b.GetX() + a.GetY() * b.GetY();
+
+		// 角度を計算
+		n += (float)atan2(cross, dot);
+	}
+
+	if (abs(n) <= 0.001)	return false;
+	return true;
+}
