@@ -52,9 +52,18 @@ private:
 	float LPress_x;
 	// 左押し込みy座標
 	float LPress_y;
+	// マウスX座標
+	float Move_x;
+	// マウスY座標
+	float Move_y;
 	// Adminクラス呼び出し変数
 	CAdminControl AC;
 public:
+	afx_msg void OnXyz();
+	afx_msg void OnUpdateXyz(CCmdUI* pCmdUI);
+	afx_msg void OnEdit();
+	afx_msg void OnUpdateEdit(CCmdUI* pCmdUI);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // WinOGLDemo2022View.cpp のデバッグ バージョン

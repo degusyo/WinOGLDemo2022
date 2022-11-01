@@ -28,6 +28,11 @@ BEGIN_MESSAGE_MAP(CWinOGLDemo2022View, CView)
 	ON_WM_DESTROY()
 	ON_WM_ERASEBKGND()
 	ON_WM_SIZE()
+	ON_COMMAND(ID_XYZ, &CWinOGLDemo2022View::OnXyz)
+	ON_UPDATE_COMMAND_UI(ID_XYZ, &CWinOGLDemo2022View::OnUpdateXyz)
+	ON_COMMAND(ID_EDIT, &CWinOGLDemo2022View::OnEdit)
+	ON_UPDATE_COMMAND_UI(ID_EDIT, &CWinOGLDemo2022View::OnUpdateEdit)
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CWinOGLDemo2022View コンストラクション/デストラクション
@@ -65,24 +70,8 @@ void CWinOGLDemo2022View::OnDraw(CDC* pDC)
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT);
 
-	// この間に描画を命令
-	/*glColor3f(1.0, 1.0, 1.0);
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(-0.5, 0.5);
-	glVertex2f(-0.5, -0.5);
-	glVertex2f(0.5, -0.5);
-	glVertex2f(0.5, 0.5);
-	glEnd();*/
-
-	// 問7.1
-	// 点を描画
-	/*glColor3f(1.0, 1.0, 1.0);
-	glPointSize(10);
-	glBegin(GL_POINTS);
-	glVertex2f(LPress_x, LPress_y);
-	glEnd();*/
-
 	AC.Draw();
+	if (AC.GetEditFlag())	AC.EditDraw();
 
 	glFlush();
 	SwapBuffers(pDC->m_hDC);
@@ -145,7 +134,9 @@ void CWinOGLDemo2022View::OnLButtonDown(UINT nFlags, CPoint point)
 			LPress_y *= num;
 		}
 	}
-	AC.NewSetVertex(LPress_x, LPress_y);
+
+	if (AC.GetEditFlag())	AC.Edit(LPress_x, LPress_y);
+	else AC.NewSetVertex(LPress_x, LPress_y);
 
 	RedrawWindow();
 	CView::OnLButtonDown(nFlags, point);
@@ -239,4 +230,88 @@ void CWinOGLDemo2022View::OnSize(UINT nType, int cx, int cy)
 
 	RedrawWindow();
 	wglMakeCurrent(clientDC.m_hDC, NULL);
+}
+
+
+void CWinOGLDemo2022View::OnXyz()
+{
+	// TODO: ここにコマンド ハンドラー コードを追加します。
+	if (AC.AxisFlag)
+	{
+		AC.AxisFlag = false;
+	}
+	else
+	{
+		AC.AxisFlag = true;
+	}
+
+	RedrawWindow();
+}
+
+
+void CWinOGLDemo2022View::OnUpdateXyz(CCmdUI* pCmdUI)
+{
+	// TODO:ここにコマンド更新 UI ハンドラー コードを追加します。
+	// AxisFlagがtrueのときボタンが沈む
+	if (AC.AxisFlag) {
+		pCmdUI->SetCheck(true);
+	}
+	else {
+		pCmdUI->SetCheck(false);
+	}
+}
+
+
+void CWinOGLDemo2022View::OnEdit()
+{
+	// TODO: ここにコマンド ハンドラー コードを追加します。
+	AC.ChangeEditFlag();
+	RedrawWindow();
+}
+
+
+void CWinOGLDemo2022View::OnUpdateEdit(CCmdUI* pCmdUI)
+{
+	// TODO:ここにコマンド更新 UI ハンドラー コードを追加します。
+	if (AC.GetEditFlag()) {
+		pCmdUI->SetCheck(true);
+	}
+	else {
+		pCmdUI->SetCheck(false);
+	}
+}
+
+
+void CWinOGLDemo2022View::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: ここにメッセージ ハンドラー コードを追加するか、既定の処理を呼び出します。
+	// 描画領域の格納
+	CRect rect;
+	GetClientRect(rect);
+
+	// 座標正規化
+	Move_x = (float)point.x / rect.Width();
+	Move_y = (float)(rect.Height() - point.y) / rect.Height();
+
+	// ワールド座標変換
+	Move_x = (Move_x - 0.5) * 2;
+	Move_y = (Move_y - 0.5) * 2;
+
+	// 画面比率に合わせる
+	if (rect.Width() != 0 || rect.Height() != 0)
+	{
+		if (rect.Width() >= rect.Height())
+		{
+			GLdouble num = (GLdouble)rect.Width() / rect.Height();
+			Move_x *= num;
+		}
+		else if (rect.Width() < rect.Height())
+		{
+			GLdouble num = (GLdouble)rect.Height() / rect.Width();
+			Move_y *= num;
+		}
+	}
+
+	RedrawWindow();
+	CView::OnMouseMove(nFlags, point);
 }
